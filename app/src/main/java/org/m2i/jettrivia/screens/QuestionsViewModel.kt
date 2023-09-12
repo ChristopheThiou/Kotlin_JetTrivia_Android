@@ -11,8 +11,9 @@ import org.m2i.jettrivia.model.QuestionItem
 import org.m2i.jettrivia.repository.QuestionRepository
 import javax.inject.Inject
 
-@HiltViewModel
+@HiltViewModel // Async
 class QuestionsViewModel @Inject constructor(private val repository: QuestionRepository): ViewModel() {
+
     val data : MutableState<DataOrException<ArrayList<QuestionItem>, Boolean, Exception>> =
         mutableStateOf(DataOrException(null,true,Exception("")))
 
@@ -20,7 +21,7 @@ class QuestionsViewModel @Inject constructor(private val repository: QuestionRep
         getAllQuestions()
     }
     private fun getAllQuestions(){
-        viewModelScope.launch {
+        viewModelScope.launch {// execute in thread
             data.value.loading = true
             data.value = repository.getAllQuestions()
             if(data.value.data.toString().isNotEmpty())

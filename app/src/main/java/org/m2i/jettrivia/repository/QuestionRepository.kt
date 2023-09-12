@@ -12,7 +12,7 @@ class QuestionRepository @Inject constructor(private val api: QuestionApi) {
 
     suspend fun getAllQuestions(): DataOrException<ArrayList<QuestionItem>,Boolean, Exception>{
         try {
-            listOfQuestions.loading = true
+            listOfQuestions.loading = true //UI
             listOfQuestions.data = api.getAllQuestions()
             if (listOfQuestions.data.toString().isNotEmpty())
                 listOfQuestions.loading = false
